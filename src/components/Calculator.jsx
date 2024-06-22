@@ -1,6 +1,7 @@
 import React, { useState, lazy, Suspense } from 'react';
 import 'tailwindcss/tailwind.css';
 
+
 const ConfettiExplosion = lazy(() => import('react-confetti-explosion'));
 
 const Button = ({ label, onClick, className }) => (
@@ -42,7 +43,7 @@ const Calculator = () => {
       setInput(prev => prev + label);
     } else {
       switch (label) {
-        case 'C':
+        case 'AC':
           setInput('');
           setResult(null);
           setHistory([]);
@@ -168,8 +169,8 @@ const Calculator = () => {
   };
 
   return (
-    <div className={`min-h-screen ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-900'}`}>
-      <div className="flex items-center justify-center min-h-screen">
+    <div className="h-screen w-screen flex justify-center items-center bg-gray-100 ">
+      <div className={`bg-gray-100 p-8 rounded-lg shadow-lg max-w-2xl mx-auto h-full ${theme === 'dark'? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-900'}`}>
         <button onClick={toggleTheme} className="absolute top-1 right-4 p-2 rounded-full bg-gray-800">{theme === 'light' ? '🌙' : '☀️'}</button>
         {confetti && (
           <Suspense fallback={<div>Loading...</div>}>
@@ -177,6 +178,14 @@ const Calculator = () => {
           </Suspense>
         )}
         <div className="bg-gray-900 p-4 rounded-lg shadow-lg max-w-2xl mx-auto h-full">
+        <div className={`p-4 mb-2 text-lg text-right text-gray-400 ${history.length > 3 ? 'overflow-y-scroll h-24' : ''}`}>
+          {history.slice(-4).map((item, index) => (
+            <div key={index}>
+              <span>{item.input} = </span>
+              <span>{item.result}</span>
+            </div>
+          ))}
+        </div>
           <Display input={input} result={result} />
           <div className="grid grid-cols-10 gap-0.5">
             <Button label="(" onClick={handleButtonClick} />
@@ -185,7 +194,7 @@ const Calculator = () => {
             <Button label="m+" onClick={handleButtonClick} />
             <Button label="m-" onClick={handleButtonClick} />
             <Button label="mr" onClick={handleButtonClick} />
-            <Button label="C" onClick={handleButtonClick} />
+            <Button label="AC" onClick={handleButtonClick} />
             <Button label="±" onClick={handleButtonClick} />
             <Button label="%" onClick={handleButtonClick} />
             <Button label="÷" onClick={handleButtonClick} className="bg-yellow-600" />
@@ -195,9 +204,9 @@ const Calculator = () => {
             <Button label="x^" onClick={handleButtonClick} />
             <Button label="eˣ" onClick={handleButtonClick} />
             <Button label="10ˣ" onClick={handleButtonClick} />
-            <Button label="7" onClick={handleButtonClick} className="bg-gray-600 text-black" />
-            <Button label="8" onClick={handleButtonClick} className="bg-gray-600 text-black" />
-            <Button label="9" onClick={handleButtonClick} className="bg-gray-600 text-black" />
+            <Button label="7" onClick={handleButtonClick} className="bg-gray-500 text-black" />
+            <Button label="8" onClick={handleButtonClick} className="bg-gray-500 text-black" />
+            <Button label="9" onClick={handleButtonClick} className="bg-gray-500 text-black" />
             <Button label="×" onClick={handleButtonClick} className="bg-yellow-600" />
             <Button label="1/x" onClick={handleButtonClick} />
             <Button label="√x" onClick={handleButtonClick} />
@@ -205,9 +214,9 @@ const Calculator = () => {
             <Button label="y√x" onClick={handleButtonClick} />
             <Button label="ln" onClick={handleButtonClick} />
             <Button label="log₁₀" onClick={handleButtonClick} />
-            <Button label="4" onClick={handleButtonClick} className="bg-gray-600 text-black" />
-            <Button label="5" onClick={handleButtonClick} className="bg-gray-600 text-black" />
-            <Button label="6" onClick={handleButtonClick} className="bg-gray-600 text-black" />
+            <Button label="4" onClick={handleButtonClick} className="bg-gray-500 text-black" />
+            <Button label="5" onClick={handleButtonClick} className="bg-gray-500 text-black" />
+            <Button label="6" onClick={handleButtonClick} className="bg-gray-500 text-black" />
             <Button label="−" onClick={handleButtonClick} className="bg-yellow-600" />
             <Button label="x!" onClick={handleButtonClick} />
             <Button label="sin" onClick={handleButtonClick} />
@@ -215,9 +224,9 @@ const Calculator = () => {
             <Button label="tan" onClick={handleButtonClick} />
             <Button label="e" onClick={handleButtonClick} />
             <Button label="EE" onClick={handleButtonClick} />
-            <Button label="1" onClick={handleButtonClick} className="bg-gray-600 text-black" />
-            <Button label="2" onClick={handleButtonClick} className="bg-gray-600 text-black" />
-            <Button label="3" onClick={handleButtonClick} className="bg-gray-600 text-black" />
+            <Button label="1" onClick={handleButtonClick} className="bg-gray-500 text-black" />
+            <Button label="2" onClick={handleButtonClick} className="bg-gray-500 text-black" />
+            <Button label="3" onClick={handleButtonClick} className="bg-gray-500 text-black" />
             <Button label="+" onClick={handleButtonClick} className="bg-yellow-600" />
             <Button label="Rad" onClick={handleButtonClick} />
             <Button label="sinh" onClick={handleButtonClick} />
@@ -225,8 +234,8 @@ const Calculator = () => {
             <Button label="tanh" onClick={handleButtonClick} />
             <Button label="π" onClick={handleButtonClick} />
             <Button label="Rand" onClick={handleButtonClick} />
-            <Button label="0" onClick={handleButtonClick} className="col-span-2 bg-gray-600 text-black" />
-            <Button label="." onClick={handleButtonClick} className="bg-gray-600" />
+            <Button label="0" onClick={handleButtonClick} className="col-span-2 bg-gray-500 text-black" />
+            <Button label="." onClick={handleButtonClick} className="bg-gray-500" />
             <Button label="=" onClick={handleButtonClick} className="bg-yellow-600" />
           </div>
         </div>
